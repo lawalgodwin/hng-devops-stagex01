@@ -64,7 +64,7 @@ fi
 
 # Ensure the given input file exists before reading the content
 input_file="$1"
-if [[ -f "$input_file" ]]; then
+(if [[ -f "$input_file" ]]; then
 # Read the content line by line
   while read -r line; do
 # Extract the username and groups on every line
@@ -83,5 +83,5 @@ if [[ -f "$input_file" ]]; then
     # create the groups and assign user to the respective group
     add_user_to_group "$username" "$usergroups"
   done < "$input_file"
-fi
+fi) >> /var/log/user_management.log
 
