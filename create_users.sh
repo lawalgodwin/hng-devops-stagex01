@@ -70,8 +70,13 @@ input_file="$1"
 # Extract the username and groups on every line
     username=$(echo "$line" | cut -d ";" -f 1)
     usergroups=$(echo "$line" | cut -d ";" -f 2 | sed -e s/","/" "/g)
-    # create the user
-    create_user "$username"
+    # creating the users
+    # check if user already exists
+    if id "$username" &>/dev/null; then
+      continue
+    else
+      create_user "$username"
+    fi
     # set user password and save user->password pairs to a file
     password=$(create_default_password)
     echo "$username:$password" | sudo chpasswd
